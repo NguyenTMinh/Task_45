@@ -3,6 +3,8 @@ package com.example.task_45;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,12 +35,15 @@ public class MainActivity extends AppCompatActivity {
             mWordList.add("Word " + i);
         }
 
+        int gridCol = getResources().getInteger(R.integer.grid_column);
+
         mClonedList = new ArrayList<>(mWordList);
 
         mRecyclerView = findViewById(R.id.rv_main);
         mAdapter = new WordListAdapter(this, mClonedList);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,gridCol));
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
@@ -59,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.option_reset){
             mClonedList = new ArrayList<>(mWordList);
             mAdapter.setmWordList(mClonedList);
-            mAdapter.notifyDataSetChanged();
             return true;
         }
         return super.onOptionsItemSelected(item);
